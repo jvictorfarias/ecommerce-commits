@@ -9,11 +9,11 @@ interface Configuration extends vscode.WorkspaceConfiguration {
 
 export async function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(
-    'lora-commits.generateCommit',
+    'e-commerce-commits.generateCommit',
     async () => {
       try {
         const configuration = vscode.workspace.getConfiguration(
-          'loraCommits'
+          'e-commerceCommits'
         ) as Configuration;
         const {
           commitTypes,

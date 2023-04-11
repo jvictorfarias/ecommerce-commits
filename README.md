@@ -1,23 +1,23 @@
-# LORA Commits
+# E-Commerce Commits
 
-![LORA Commits](resources/lora-commits.png)
+![E-Commerce Commits](resources/ecommerce-commits.png)
 
 ## Features
 
-Easily create LORA standard commits by running the Generate LORA Commit command.
+Easily create E-Commerce standard commits by running the Generate E-Commerce Commit command.
 Ex:
-![LORA Commits](resources/generate-commit.png)
+![E-Commerce Commits](resources/generate-commit.png)
 
 For the options setup, you can set a default project name in your settings to automatically add it to your commits.
 
 ```json
-"loraCommits.defaultProjectLabel": "SCAD",
+"e-commerceCommits.defaultProjectLabel": "XMAS",
 ```
 
 You can also disable the automatic commit functionality by adding the following to your settings:
 
 ```json
-"loraCommits.disableAutoCommit": true,
+"e-commerceCommits.disableAutoCommit": true,
 ```
 
 **Enjoy!**

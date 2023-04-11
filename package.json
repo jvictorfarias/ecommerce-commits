@@ -1,18 +1,18 @@
 {
-  "name": "jvictorfarias-lora-commits",
+  "name": "jvictorfarias-ecommerce-commits",
   "author": {
     "name": "Victor Farias",
     "email": "victor.farias@osf.digital"
   },
-  "displayName": "LORA Commits",
-  "description": "A tool to easily generate LORA project commits",
+  "displayName": "E-commerce Commits",
+  "description": "A tool to easily generate e-commerce project commits",
   "publisher": "jvictorfarias",
-  "icon": "resources/lora-commits.png",
+  "icon": "resources/ecommerce-commits.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jvictorfarias/lora-commits.git"
+    "url": "https://github.com/jvictorfarias/ecommerce-commits.git"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "engines": {
     "vscode": "^1.77.0"
@@ -25,15 +25,15 @@
   "contributes": {
     "commands": [
       {
-        "command": "lora-commits.generateCommit",
-        "title": "LORA Commits: Generate Commit"
+        "command": "e-commerce-commits.generateCommit",
+        "title": "E-Commerce Commits: Generate Commit"
       }
     ],
     "configuration": {
-      "title": "loraCommits",
+      "title": "e-commerceCommits",
       "type": "object",
       "properties": {
-        "loraCommits.commitTypes": {
+        "e-commerceCommits.commitTypes": {
           "type": "array",
           "default": [
             "fix",
@@ -47,7 +47,7 @@
           ],
           "description": "Commit types"
         },
-        "loraCommits.impactedAreas": {
+        "e-commerceCommits.impactedAreas": {
           "type": "array",
           "default": [
             "GLOBAL",
@@ -61,12 +61,12 @@
           ],
           "description": "Impacted areas"
         },
-        "loraCommits.defaultProjectLabel": {
+        "e-commerceCommits.defaultProjectLabel": {
           "type": "string",
           "default": "",
-          "description": "Default project label for LORA"
+          "description": "Default project label for E-Commerce"
         },
-        "loraCommits.disableAutoCommit": {
+        "e-commerceCommits.disableAutoCommit": {
           "type": "boolean",
           "default": false,
           "description": "Disable auto commits after entering a message"
