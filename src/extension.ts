@@ -108,23 +108,36 @@ export async function activate(context: vscode.ExtensionContext) {
 
         for (const folder of workspaceFolders) {
           const git = vscode.extensions.getExtension('vscode.git')?.exports;
-          const repository = git?.getAPI(1).repositories.find((repo: any) => {
-            const relativePath = path.relative(
-              folder.uri.fsPath,
-              repo.rootUri.fsPath
-            );
-            return (
-              !relativePath.startsWith('..') && !path.isAbsolute(relativePath)
-            );
-          });
-
-          if (repository) {
-            repositories.push({
-              label: repository.rootUri.fsPath,
-              description: repository.state.HEAD?.name || '',
-              detail: repository.state.HEAD?.commit || '',
+          const workspaceRepositories = git
+            ?.getAPI(1)
+            .repositories.filter((repo: any) => {
+              const relativePath = path.relative(
+                folder.uri.fsPath,
+                repo.rootUri.fsPath
+              );
+              return (
+                !relativePath.startsWith('..') && !path.isAbsolute(relativePath)
+              );
             });
+
+          for (const repository of workspaceRepositories) {
+            const label = repository.rootUri.fsPath;
+            const existingRepository = repositories.find(
+              r => r.label === label
+            );
+            if (!existingRepository) {
+              repositories.push({
+                label,
+                description: repository.state.HEAD?.name || '',
+                detail: repository.state.HEAD?.commit || '',
+              });
+            }
           }
+        }
+
+        if (!repositories.length) {
+          vscode.window.showErrorMessage('No Git repositories found');
+          return;
         }
 
         if (!repositories.length) {
