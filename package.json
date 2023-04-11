@@ -1,11 +1,13 @@
 {
-  "name": "lora-commits",
+  "name": "jvictorfarias.lora-commits",
   "author": {
     "name": "Victor Farias",
     "email": "victor.farias@osf.digital"
   },
   "displayName": "LORA Commits",
-  "description": "",
+  "description": "A tool to easily generate LORA project commits",
+  "publisher": "jvictorfarias",
+  "icon": "https://drive.google.com/file/d/1ZjlAMlLELVsvfpcYtTA3Ws0WDa4ZnhSH/view?usp=share_link",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.77.0"
@@ -23,9 +25,10 @@
       }
     ],
     "configuration": {
+      "title": "loraCommits",
       "type": "object",
       "properties": {
-        "commitTypes": {
+        "loraCommits.commitTypes": {
           "type": "array",
           "default": [
             "fix",
@@ -39,7 +42,7 @@
           ],
           "description": "Commit types"
         },
-        "impactedAreas": {
+        "loraCommits.impactedAreas": {
           "type": "array",
           "default": [
             "GLOBAL",
@@ -52,6 +55,11 @@
             "MISC"
           ],
           "description": "Impacted areas"
+        },
+        "loraCommits.defaultProjectLabel": {
+          "type": "string",
+          "default": "",
+          "description": "Default project label for LORA"
         }
       }
     }

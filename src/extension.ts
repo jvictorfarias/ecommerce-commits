@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-interface Configuration {
+interface Configuration extends vscode.WorkspaceConfiguration {
   commitTypes: string[];
   impactedAreas: string[];
+  defaultProjectLabel: string | undefined;
 }
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -11,24 +12,29 @@ export async function activate(context: vscode.ExtensionContext) {
     'lora-commits.generateCommit',
     async () => {
       try {
-        const configuration =
-          vscode.workspace.getConfiguration() as unknown as Configuration;
-        const { commitTypes, impactedAreas } = configuration;
+        const configuration = vscode.workspace.getConfiguration(
+          'loraCommits'
+        ) as Configuration;
+        const { commitTypes, impactedAreas, defaultProjectLabel } =
+          configuration;
 
-        const projectLabel = await vscode.window.showInputBox({
-          prompt: 'Enter your project label',
-          placeHolder: 'Project label...',
-          ignoreFocusOut: true,
-          validateInput: (value: string) => {
-            if (!value) {
-              return 'Please enter a project Label';
-            }
-            if (value.length > 6) {
-              return 'Label is too large';
-            }
-            return null;
-          },
-        });
+        let projectLabel = defaultProjectLabel;
+        if (!projectLabel) {
+          projectLabel = await vscode.window.showInputBox({
+            prompt: 'Enter your project label',
+            placeHolder: 'Project label...',
+            ignoreFocusOut: true,
+            validateInput: (value: string) => {
+              if (!value) {
+                return 'Please enter a project Label';
+              }
+              if (value.length > 6) {
+                return 'Label is too large';
+              }
+              return null;
+            },
+          });
+        }
 
         if (!projectLabel) {
           return;
@@ -98,7 +104,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
         for (const folder of workspaceFolders) {
           const git = vscode.extensions.getExtension('vscode.git')?.exports;
-          // check if the repository is children of the workspace folder
           const repository = git?.getAPI(1).repositories.find((repo: any) => {
             const relativePath = path.relative(
               folder.uri.fsPath,
@@ -132,20 +137,23 @@ export async function activate(context: vscode.ExtensionContext) {
         }
 
         const git = vscode.extensions.getExtension('vscode.git')?.exports;
-        const repo = git
+        const selectedRepository = git
           ?.getAPI(1)
           .repositories.find(
             (repo: any) => repo.rootUri.fsPath === repository.label
           );
 
-        if (!repo) {
+        if (!selectedRepository) {
           vscode.window.showErrorMessage('Repository not found');
           return;
         }
 
-        repo.inputBox.value = formattedCommitMessage;
+        selectedRepository.inputBox.value = formattedCommitMessage;
+
+        await vscode.commands.executeCommand('git.commit', selectedRepository);
 
         vscode.window.showInformationMessage('Commit successful');
+        vscode.commands.executeCommand('workbench.view.scm');
       } catch (error: any) {
         vscode.window.showErrorMessage(`Error: ${error.message}`);
       }
