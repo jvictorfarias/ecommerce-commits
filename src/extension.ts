@@ -15,8 +15,12 @@ export async function activate(context: vscode.ExtensionContext) {
         const configuration = vscode.workspace.getConfiguration(
           'loraCommits'
         ) as Configuration;
-        const { commitTypes, impactedAreas, defaultProjectLabel } =
-          configuration;
+        const {
+          commitTypes,
+          impactedAreas,
+          defaultProjectLabel,
+          disableAutoCommit,
+        } = configuration;
 
         let projectLabel = defaultProjectLabel;
         if (!projectLabel) {
@@ -150,7 +154,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
         selectedRepository.inputBox.value = formattedCommitMessage;
 
-        await vscode.commands.executeCommand('git.commit', selectedRepository);
+        if (!disableAutoCommit) {
+          await vscode.commands.executeCommand(
+            'git.commit',
+            selectedRepository
+          );
+        }
 
         vscode.window.showInformationMessage('Commit successful');
         vscode.commands.executeCommand('workbench.view.scm');

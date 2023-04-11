@@ -7,8 +7,13 @@
   "displayName": "LORA Commits",
   "description": "A tool to easily generate LORA project commits",
   "publisher": "jvictorfarias",
-  "icon": "https://drive.google.com/file/d/1ZjlAMlLELVsvfpcYtTA3Ws0WDa4ZnhSH/view?usp=share_link",
+  "icon": "resources/lora-commits.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jvictorfarias/lora-commits.git"
+  },
   "version": "0.0.1",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -60,6 +65,11 @@
           "type": "string",
           "default": "",
           "description": "Default project label for LORA"
+        },
+        "loraCommits.disableAutoCommit": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable auto commits after entering a message"
         }
       }
     }
